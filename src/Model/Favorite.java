@@ -32,7 +32,8 @@ public class Favorite {
 	
 	private static final String COLLECTION_NAME = "favourites";
 	private static MongoCollection<Document> collection = null;
-	public static String create(String user_id,String id) {
+	@SuppressWarnings("null")
+	public static HashMap<String, Object> create(HashMap<String, Object>attributes,String user_id,String id) {
 
 		String uri = "mongodb://admin:admin@cluster0-shard-00-00-nvkqp.gcp.mongodb.net:27017,cluster0-shard-00-01-nvkqp.gcp.mongodb.net:27017,cluster0-shard-00-02-nvkqp.gcp.mongodb.net:27017/El-Menus?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true";
 
@@ -55,8 +56,10 @@ public class Favorite {
 		}
 		System.out.println(collection.getNamespace());
 		System.out.println(newFavourite.get("fav_id"));
+		HashMap<String, Object> fav = new HashMap<String, Object>() ;
+		fav.put("id", id);
 		mongoClient.close();
-		return id;
+		return fav;
 		
 	}
 

@@ -31,14 +31,18 @@ public class CreateFavorite extends Command {
 			String[] parametersArray = url.split("/");
 			System.out.println(parametersArray[1]);
 			JSONObject messageBody = (JSONObject) parser.parse((String) props.get("body"));
-//			HashMap<String, Object> requestBodyHash = jsonToMap((JSONObject) messageBody.get("body"));
+			
+			HashMap<String, Object> requestBodyHash = jsonToMap((JSONObject) messageBody.get("body"));
+			System.out.println("sss");
 			AMQP.BasicProperties properties = (AMQP.BasicProperties) props.get("properties");
+			System.out.println("ssss");
 			AMQP.BasicProperties replyProps = (AMQP.BasicProperties) props.get("replyProps");
 			Envelope envelope = (Envelope) props.get("envelope");
 			System.out.println("hereee");
-			String createdMessage = Favorite.create("1",parametersArray[1]);
+			HashMap<String, Object> createdFav = Favorite.create(requestBodyHash,"1",parametersArray[1]);
 			
-			JSONObject response = (JSONObject) parser.parse(createdMessage);
+			JSONObject response = jsonFromMap(createdFav);
+
 			
 			channel.basicPublish("", properties.getReplyTo(), replyProps, response.toString().getBytes("UTF-8"));
 			System.out.println("sasa");
