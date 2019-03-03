@@ -1,4 +1,6 @@
 import Commands.Command;
+import Commands.CreateFavorite;
+import Commands.RetrieveFavourite;
 
 //import Commands.delete.DeleteMessage;
 //import Commands.get.GetMessage;
@@ -17,7 +19,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeoutException;
 
 public class FavoritesService {
-	private static final String RPC_QUEUE_NAME = "restaurants-request";
+	private static final String RPC_QUEUE_NAME = "favorite-request";
 
 	public static void main(String[] argv) {
 
@@ -52,16 +54,15 @@ public class FavoritesService {
 						Command cmd = null;
 						System.out.println(command);
 						switch (command) {
-						case "CreateRestaurants":
-							
+						case "CreateFavorite":
+							cmd = new CreateFavorite();
+							System.out.println("created");
 							break;
-						case "RetrieveRestaurants":
-						
+						case "RetrieveFavorite":
+							cmd = new RetrieveFavourite();
+							System.out.println("fetched");
 							break;
-//                            case "UpdateMessages":   cmd = new UpdateMessage();
-//                                break;
-//                            case "DeleteMessages":   cmd = new DeleteMessage();
-//                                break;
+//                  
 						}
 
 						HashMap<String, Object> props = new HashMap<String, Object>();
