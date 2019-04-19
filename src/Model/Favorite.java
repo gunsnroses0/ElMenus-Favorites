@@ -35,7 +35,7 @@ public class Favorite {
 	@SuppressWarnings("null")
 	public static HashMap<String, Object> create(HashMap<String, Object>attributes,String user_id,String id) {
 
-		String uri = "mongodb://admin:admin@cluster0-shard-00-00-nvkqp.gcp.mongodb.net:27017,cluster0-shard-00-01-nvkqp.gcp.mongodb.net:27017,cluster0-shard-00-02-nvkqp.gcp.mongodb.net:27017/El-Menus?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true";
+		String uri = "mongodb://localhost";
 
 		MongoClient mongoClient = new MongoClient(uri);
 		mongoClient = new MongoClient(new MongoClientURI(uri, MongoClientOptions.builder().sslEnabled(true).sslInvalidHostNameAllowed(true)));
@@ -66,7 +66,7 @@ public class Favorite {
 
 	public static ArrayList<HashMap<String, Object>> get(String favouriteId) {
 
-		String uri = "mongodb://admin:admin@cluster0-shard-00-00-nvkqp.gcp.mongodb.net:27017,cluster0-shard-00-01-nvkqp.gcp.mongodb.net:27017,cluster0-shard-00-02-nvkqp.gcp.mongodb.net:27017/El-Menus?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true";
+		String uri = "mongodb://localhost";
 
 		MongoClient mongoClient = new MongoClient(uri);
 		mongoClient = new MongoClient(new MongoClientURI(uri, MongoClientOptions.builder().sslEnabled(true).sslInvalidHostNameAllowed(true)));
