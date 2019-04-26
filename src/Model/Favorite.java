@@ -41,8 +41,8 @@ public class Favorite {
 	}
 	static Favorite instance = new Favorite();
 	@SuppressWarnings("null")
-	public static HashMap<String, Object> create(HashMap<String, Object>attributes,String user_id,String id) {
-
+	public static HashMap<String, Object> create(HashMap<String, Object>attributes,String user_id,String id) throws ParseException {
+		HashMap<String, Object> returnValue = null ;
 		MongoClientOptions.Builder options = MongoClientOptions.builder()
 	            .connectionsPerHost(DbPoolCount);
 		MongoClientURI uri = new MongoClientURI(
@@ -58,7 +58,11 @@ public class Favorite {
 		newFavourite.put("fav_id", id);
 		newFavourite.put("user_id", user_id);
 		collection.insertOne(newFavourite);
-		System.out.println("hshshssh");
+		JSONParser parser = new JSONParser();
+
+		returnValue = Command.jsonToMap((JSONObject) parser.parse(newFavourite.toJson()));
+		
+
 		}
 		catch (MongoException | ClassCastException e) {
 			System.out.println(e.getMessage());
@@ -69,17 +73,17 @@ public class Favorite {
 		HashMap<String, Object> fav = new HashMap<String, Object>() ;
 		fav.put("id", id);
 		mongoClient.close();
-		return fav;
-		
+		return returnValue;
 	}
 
 
 	public static ArrayList<HashMap<String, Object>> get(String favouriteId) {
 
-		String uri = "mongodb://localhost";
-
+		MongoClientOptions.Builder options = MongoClientOptions.builder()
+	            .connectionsPerHost(DbPoolCount);
+		MongoClientURI uri = new MongoClientURI(
+				"mongodb://localhost",options);
 		MongoClient mongoClient = new MongoClient(uri);
-		mongoClient = new MongoClient(new MongoClientURI(uri, MongoClientOptions.builder().sslEnabled(true).sslInvalidHostNameAllowed(true)));
 		MongoDatabase database = mongoClient.getDatabase("El-Menus");
 		MongoCollection<Document> collection = database.getCollection("favourites");
 		BasicDBObject query = new BasicDBObject();
