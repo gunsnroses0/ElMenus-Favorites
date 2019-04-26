@@ -33,6 +33,7 @@ public class Favorite {
 	private static final String COLLECTION_NAME = "favourites";
 	private static MongoCollection<Document> collection = null;
 	private static int DbPoolCount = 4;
+	static String host = System.getenv("MONGO_URI");
 	public static int getDbPoolCount() {
 		return DbPoolCount;
 	}
@@ -46,7 +47,7 @@ public class Favorite {
 		MongoClientOptions.Builder options = MongoClientOptions.builder()
 	            .connectionsPerHost(DbPoolCount);
 		MongoClientURI uri = new MongoClientURI(
-				"mongodb://localhost",options);
+				host,options);
 
 		MongoClient mongoClient = new MongoClient(uri);
 		MongoDatabase database = mongoClient.getDatabase("El-Menus");
@@ -81,7 +82,7 @@ public class Favorite {
 		MongoClientOptions.Builder options = MongoClientOptions.builder()
 	            .connectionsPerHost(DbPoolCount);
 		MongoClientURI uri = new MongoClientURI(
-				"mongodb://localhost",options);
+				host,options);
 		MongoClient mongoClient = new MongoClient(uri);
 		MongoDatabase database = mongoClient.getDatabase("El-Menus");
 		MongoCollection<Document> collection = database.getCollection("favourites");
