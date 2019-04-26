@@ -32,13 +32,23 @@ public class Favorite {
 	
 	private static final String COLLECTION_NAME = "favourites";
 	private static MongoCollection<Document> collection = null;
+	private static int DbPoolCount = 4;
+	public static int getDbPoolCount() {
+		return DbPoolCount;
+	}
+	public static void setDbPoolCount(int dbPoolCount) {
+		DbPoolCount = dbPoolCount;
+	}
+	static Favorite instance = new Favorite();
 	@SuppressWarnings("null")
 	public static HashMap<String, Object> create(HashMap<String, Object>attributes,String user_id,String id) {
 
-		String uri = "mongodb://localhost";
+		MongoClientOptions.Builder options = MongoClientOptions.builder()
+	            .connectionsPerHost(DbPoolCount);
+		MongoClientURI uri = new MongoClientURI(
+				"mongodb://localhost",options);
 
 		MongoClient mongoClient = new MongoClient(uri);
-		mongoClient = new MongoClient(new MongoClientURI(uri, MongoClientOptions.builder().sslEnabled(true).sslInvalidHostNameAllowed(true)));
 		MongoDatabase database = mongoClient.getDatabase("El-Menus");
 		
 		// Retrieving a collection

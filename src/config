@@ -1,0 +1,9 @@
+POST,/favorite/id,CreateFavorite
+GET,/favorite/id,RetrieveFavorite
+POST,/favorite/addCommand/,AddCommand
+POST,/favorite/updateCommand/,UpdateCommand
+POST,/favorite/deleteCommand/,DeleteCommand
+POST,/favorite/updateThreadPoolCount/,UpdateThreadPoolCount
+POST,/favorite/updateDBPoolCount/,UpdateDBPoolCount
+GET,/favorite/freeze/,FreezeQueue
+GET,/favorite/resume/,ResumeQueue

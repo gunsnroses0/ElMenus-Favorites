@@ -16,7 +16,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Envelope;
 
 import Model.Favorite;
-public class RetrieveFavourite extends Command {
+public class RetrieveFavorite extends Command {
 
 	@Override
 	protected void execute() throws NoSuchMethodException, SecurityException, ClassNotFoundException,
@@ -26,19 +26,20 @@ public class RetrieveFavourite extends Command {
         JSONParser parser = new JSONParser();
         
         try {
-        	System.out.println("ddd");
-        	JSONObject messageBody = (((JSONObject) parser.parse((String) props.get("body"))));
+        	JSONObject messageBody = (JSONObject) parser.parse((String) props.get("body"));
+			String url = ((JSONObject) parser.parse((String) props.get("body"))).get("uri").toString();
+			url = url.substring(1);
+			System.out.println(Arrays.toString(url.split("/")));
 			
-        	JSONObject mess = (JSONObject) (messageBody).get("body");
-			System.out.println(mess.get("user_id").toString());
+			String[] parametersArray = url.split("/");
+			String user_id = parametersArray[1];
 			
-			String id = mess.get("user_id").toString();
             AMQP.BasicProperties properties = (AMQP.BasicProperties) props.get("properties");
             AMQP.BasicProperties replyProps = (AMQP.BasicProperties) props.get("replyProps");
             Envelope envelope = (Envelope) props.get("envelope");
 			
-			ArrayList<HashMap<String, Object>> favourites = Favorite.get(id);
-            JSONObject response = Command.jsonFromArray(favourites, "favourites");
+			ArrayList<HashMap<String, Object>> favorites = Favorite.get(user_id);
+            JSONObject response = Command.jsonFromArray(favorites, "favorites");
             channel.basicPublish("", properties.getReplyTo(), replyProps, response.toString().getBytes("UTF-8"));
         } catch (ParseException e) {
             e.printStackTrace();
