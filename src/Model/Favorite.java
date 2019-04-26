@@ -41,7 +41,7 @@ public class Favorite {
 	}
 	static Favorite instance = new Favorite();
 	@SuppressWarnings("null")
-	public static HashMap<String, Object> create(HashMap<String, Object>attributes,String user_id,String id) throws ParseException {
+	public static HashMap<String, Object> create(HashMap<String, Object>attributes,String id) throws ParseException {
 		HashMap<String, Object> returnValue = null ;
 		MongoClientOptions.Builder options = MongoClientOptions.builder()
 	            .connectionsPerHost(DbPoolCount);

@@ -39,7 +39,7 @@ public class CreateFavorite extends Command {
 			AMQP.BasicProperties replyProps = (AMQP.BasicProperties) props.get("replyProps");
 			Envelope envelope = (Envelope) props.get("envelope");
 			System.out.println("hereee");
-			HashMap<String, Object> createdFav = Favorite.create(requestBodyHash,"1",parametersArray[1]);
+			HashMap<String, Object> createdFav = Favorite.create(requestBodyHash,parametersArray[1]);
 			
 			JSONObject response = jsonFromMap(createdFav);
 
