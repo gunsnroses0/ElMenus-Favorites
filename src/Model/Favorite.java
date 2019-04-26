@@ -56,7 +56,6 @@ public class Favorite {
 		Document newFavourite = new Document();
 		try{
 		newFavourite.put("fav_id", id);
-		newFavourite.put("user_id", user_id);
 		collection.insertOne(newFavourite);
 		JSONParser parser = new JSONParser();
 
