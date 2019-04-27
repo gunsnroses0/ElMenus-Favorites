@@ -40,16 +40,24 @@ public class Favorite {
 	public static void setDbPoolCount(int dbPoolCount) {
 		DbPoolCount = dbPoolCount;
 	}
+	
+	static MongoClientOptions.Builder options = null;
+	static MongoClientURI uri = null;
+	static MongoClient mongoClient = null; 
+		
+	public static void initializeDb() {
+		options = MongoClientOptions.builder()
+				.connectionsPerHost(DbPoolCount);
+		uri = new MongoClientURI(
+				host,options);
+		mongoClient = new MongoClient(uri);
+			
+	}
 	static Favorite instance = new Favorite();
 	@SuppressWarnings("null")
 	public static HashMap<String, Object> create(HashMap<String, Object>attributes,String id) throws ParseException {
 		HashMap<String, Object> returnValue = null ;
-		MongoClientOptions.Builder options = MongoClientOptions.builder()
-	            .connectionsPerHost(DbPoolCount);
-		MongoClientURI uri = new MongoClientURI(
-				host,options);
-
-		MongoClient mongoClient = new MongoClient(uri);
+		
 		MongoDatabase database = mongoClient.getDatabase("El-Menus");
 		
 		// Retrieving a collection
@@ -79,11 +87,6 @@ public class Favorite {
 
 	public static ArrayList<HashMap<String, Object>> get(String favouriteId) {
 
-		MongoClientOptions.Builder options = MongoClientOptions.builder()
-	            .connectionsPerHost(DbPoolCount);
-		MongoClientURI uri = new MongoClientURI(
-				host,options);
-		MongoClient mongoClient = new MongoClient(uri);
 		MongoDatabase database = mongoClient.getDatabase("El-Menus");
 		MongoCollection<Document> collection = database.getCollection("favourites");
 		BasicDBObject query = new BasicDBObject();
@@ -108,8 +111,6 @@ public class Favorite {
         return favourites;
 		
 	}
-
-
 
 }
 

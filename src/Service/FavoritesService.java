@@ -2,6 +2,7 @@ package Service;
 import Commands.Command;
 import Commands.CreateFavorite;
 import Commands.RetrieveFavorite;
+import Model.Favorite;
 
 import com.mongodb.client.MongoDatabase;
 //import Commands.delete.DeleteMessage;
@@ -45,6 +46,7 @@ public class FavoritesService {
 	public static void main(String[] argv) {
 		run();
 		ServiceController.run();
+		Favorite.initializeDb();
 	}
 	public static void run() {
 		try {

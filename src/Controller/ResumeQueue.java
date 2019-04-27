@@ -28,12 +28,12 @@ public class ResumeQueue extends Command {
 		HashMap<String, Object> props = parameters;
 		Channel channel = (Channel) props.get("channel");
 		try {
-			FavoritesService.setRPC_QUEUE_NAME("like-request");
+			FavoritesService.setRPC_QUEUE_NAME("favorite-request");
 			FavoritesService.run();
 			System.out.println(FavoritesService.getRPC_QUEUE_NAME());
 			connection = factory.newConnection();
 			channel = connection.createChannel();
-			channel.queueDeclare("like-request",false,false,false,null);
+			channel.queueDeclare("favorite-request",false,false,false,null);
 			AMQP.BasicProperties properties = (AMQP.BasicProperties) props.get("properties");
 			AMQP.BasicProperties replyProps = (AMQP.BasicProperties) props.get("replyProps");
 			
