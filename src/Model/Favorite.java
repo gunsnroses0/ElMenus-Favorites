@@ -64,6 +64,9 @@ public class Favorite {
 		MongoCollection<Document> collection = database.getCollection("favourites");
 		Document newFavourite = new Document();
 		try{
+			for (String key : attributes.keySet()) {
+				newFavourite.append(key, attributes.get(key));
+			}
 		newFavourite.put("fav_id", id);
 		collection.insertOne(newFavourite);
 		JSONParser parser = new JSONParser();
@@ -80,7 +83,6 @@ public class Favorite {
 		System.out.println(newFavourite.get("fav_id"));
 		HashMap<String, Object> fav = new HashMap<String, Object>() ;
 		fav.put("id", id);
-		mongoClient.close();
 		return returnValue;
 	}
 
@@ -106,8 +108,7 @@ public class Favorite {
 			}
 		}
 		
-			
-		mongoClient.close();
+		
         return favourites;
 		
 	}
